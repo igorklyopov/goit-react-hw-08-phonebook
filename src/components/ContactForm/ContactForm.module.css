@@ -16,7 +16,7 @@
   margin-left: auto;
   margin-right: auto;
   padding: 5px 10px;
-  font-family: "Russo One";
+  /* font-family: "Russo One"; */
   font-size: 18px;
   color: var(--secondary-text-color);
   outline: none;

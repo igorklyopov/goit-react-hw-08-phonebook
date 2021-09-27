@@ -6,7 +6,7 @@ function HomePage() {
     <>
       <Header />
       <main>
-        <h1>Hello</h1>
+        <h1 style={{ marginTop: "200px" }}>Hello</h1>
       </main>
       <Footer />
     </>

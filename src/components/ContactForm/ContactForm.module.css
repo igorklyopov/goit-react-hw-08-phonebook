@@ -18,11 +18,11 @@
   padding: 5px 10px;
   /* font-family: "Russo One"; */
   font-size: 18px;
-  color: var(--secondary-text-color);
+  /* color: var(--secondary-text-color); */
   outline: none;
   border: none;
   border-radius: 5px;
-  background-color: var(--secondary-bg-color);
+  /* background-color: var(--secondary-bg-color); */
   box-shadow: var(--basic-box-shadow);
 }
 

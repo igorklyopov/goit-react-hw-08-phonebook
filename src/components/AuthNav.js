@@ -2,9 +2,9 @@ import { NavLink } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
 
-function SiteNav() {
+function AuthNav() {
   return (
-    <Toolbar component="nav">
+    <div>
       <ul
         className="list"
         style={{
@@ -19,13 +19,18 @@ function SiteNav() {
             marginRight: "10px",
           }}
         >
-          <NavLink to="/" className="link">
-            Phonebook
+          <NavLink to="/login" className="link">
+            Login
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/signup" className="link">
+            Sign up
           </NavLink>
         </li>
       </ul>
-    </Toolbar>
+    </div>
   );
 }
 
-export { SiteNav };
+export { AuthNav };

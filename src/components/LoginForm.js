@@ -16,41 +16,41 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useDispatch } from "react-redux";
+import { loginUser } from "redux/auth/authOperations";
 
 function LoginForm() {
+  const dispatch = useDispatch();
+
   const initialAuthValues = {
     email: "",
     password: "",
     showPassword: false,
   };
 
-  const [values, setValues] = useState(initialAuthValues);
-
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [showPassword, setShowPassword] = useState(false);
+  const [authValues, setAuthValues] = useState(initialAuthValues);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      userName: data.get("userName"),
-      email: data.get("email"),
-      password: data.get("password"),
-    });
 
-    setValues(initialAuthValues);
+    const userCredentials = {
+      email: authValues.email,
+      password: authValues.password,
+    };
+
+    setAuthValues(initialAuthValues);
+
+    dispatch(loginUser(userCredentials));
   };
 
   const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
+    setAuthValues({ ...authValues, [prop]: event.target.value });
   };
 
   const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
+    setAuthValues({
+      ...authValues,
+      showPassword: !authValues.showPassword,
     });
   };
 
@@ -83,7 +83,7 @@ function LoginForm() {
             id="email"
             label="Email Address"
             name="email"
-            value={values.email}
+            value={authValues.email}
             autoComplete="email"
             autoFocus
             onChange={handleChange("email")}
@@ -93,8 +93,8 @@ function LoginForm() {
             <OutlinedInput
               id="password"
               name="password"
-              type={values.showPassword ? "text" : "password"}
-              value={values.password}
+              type={authValues.showPassword ? "text" : "password"}
+              value={authValues.password}
               onChange={handleChange("password")}
               endAdornment={
                 <InputAdornment position="end">
@@ -104,7 +104,11 @@ function LoginForm() {
                     onMouseDown={handleMouseDownPassword}
                     edge="end"
                   >
-                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                    {authValues.showPassword ? (
+                      <VisibilityOff />
+                    ) : (
+                      <Visibility />
+                    )}
                   </IconButton>
                 </InputAdornment>
               }

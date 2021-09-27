@@ -5,10 +5,7 @@ import IconButton, {
 } from "../IconButton/IconButton";
 import { ReactComponent as IconCross } from "images/cross.svg";
 import addClassNames from "utils/addClassNames";
-import {
-  deleteContact,
-  fetchContacts,
-} from "redux/contacts/contactsOperations";
+import { deleteContact, getContacts } from "redux/contacts/contactsOperations";
 import { getFilteredContacts } from "redux/contacts/contactsSelectors";
 import { useEffect } from "react";
 
@@ -21,7 +18,7 @@ const ContactsList = () => {
   const onDeleteContactBtnClick = (id) => dispatch(deleteContact(id));
 
   useEffect(() => {
-    dispatch(fetchContacts());
+    dispatch(getContacts());
   }, [dispatch]);
 
   return (

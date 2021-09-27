@@ -16,42 +16,43 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { useDispatch } from "react-redux";
+import { registerUser } from "redux/auth/authOperations";
+import contactsAPI from "services/contactsAPI";
 
 function SignUpForm() {
+  const dispatch = useDispatch();
   const initialAuthValues = {
-    userName: "",
+    name: "",
     email: "",
     password: "",
     showPassword: false,
   };
 
-  const [values, setValues] = useState(initialAuthValues);
-
-  // const [email, setEmail] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [showPassword, setShowPassword] = useState(false);
+  const [authValues, setAuthValues] = useState(initialAuthValues);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      userName: data.get("userName"),
-      email: data.get("email"),
-      password: data.get("password"),
-    });
 
-    setValues(initialAuthValues);
+    const userCredentials = {
+      name: authValues.name,
+      email: authValues.email,
+      password: authValues.password,
+    };
+
+    setAuthValues(initialAuthValues);
+
+    dispatch(registerUser(userCredentials));
   };
 
   const handleChange = (prop) => (event) => {
-    setValues({ ...values, [prop]: event.target.value });
+    setAuthValues({ ...authValues, [prop]: event.target.value });
   };
 
   const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
+    setAuthValues({
+      ...authValues,
+      showPassword: !authValues.showPassword,
     });
   };
 
@@ -74,20 +75,20 @@ function SignUpForm() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign Up
+          Sign up
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
             margin="dense"
             required
             fullWidth
-            id="userName"
+            id="name"
             label="Name"
-            name="userName"
-            value={values.userName}
+            name="name"
+            value={authValues.name}
             autoComplete="username"
             autoFocus
-            onChange={handleChange("userName")}
+            onChange={handleChange("name")}
           />
           <TextField
             margin="dense"
@@ -96,9 +97,8 @@ function SignUpForm() {
             id="email"
             label="Email Address"
             name="email"
-            value={values.email}
+            value={authValues.email}
             autoComplete="email"
-            autoFocus
             onChange={handleChange("email")}
           />
           <FormControl variant="outlined" fullWidth margin="dense">
@@ -106,8 +106,8 @@ function SignUpForm() {
             <OutlinedInput
               id="password"
               name="password"
-              type={values.showPassword ? "text" : "password"}
-              value={values.password}
+              type={authValues.showPassword ? "text" : "password"}
+              value={authValues.password}
               onChange={handleChange("password")}
               endAdornment={
                 <InputAdornment position="end">
@@ -117,7 +117,11 @@ function SignUpForm() {
                     onMouseDown={handleMouseDownPassword}
                     edge="end"
                   >
-                    {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                    {authValues.showPassword ? (
+                      <VisibilityOff />
+                    ) : (
+                      <Visibility />
+                    )}
                   </IconButton>
                 </InputAdornment>
               }
@@ -130,7 +134,7 @@ function SignUpForm() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign Up
+            Sign up
           </Button>
         </Box>
       </Box>

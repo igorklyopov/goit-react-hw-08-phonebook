@@ -5,9 +5,7 @@ import { changeFilter } from "redux/contacts/contactsActions";
 function Filter({ value }) {
   const dispatch = useDispatch();
 
-  const onFilterChange = (e) => {
-    dispatch(changeFilter(e.target.value));
-  };
+  const onFilterChange = (e) => dispatch(changeFilter(e.target.value));
 
   return (
     <label className={style.contactsFilterLabel}>

@@ -1,12 +1,12 @@
+import authAPI from "services/authAPI";
 import { authToken } from "services/authToken";
-import contactsAPI from "services/contactsAPI";
 const { createAsyncThunk } = require("@reduxjs/toolkit");
 
 const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (userCredentials, { rejectWithValue }) => {
     try {
-      const user = await contactsAPI.postUserRegistrData(userCredentials);
+      const user = await authAPI.postUserRegistrData(userCredentials);
       authToken.set(user.token);
       return user;
     } catch (err) {
@@ -19,7 +19,7 @@ const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (userCredentials, { rejectWithValue }) => {
     try {
-      const user = await contactsAPI.postUserLoginData(userCredentials);
+      const user = await authAPI.postUserLoginData(userCredentials);
       authToken.set(user.token);
       return user;
     } catch (err) {
@@ -32,7 +32,7 @@ const logOutUser = createAsyncThunk(
   "auth/logOutUser",
   async (_, { rejectWithValue }) => {
     try {
-      const user = await contactsAPI.deleteUserLoginData();
+      const user = await authAPI.deleteUserLoginData();
       authToken.unset();
       return user;
     } catch (err) {
@@ -53,7 +53,7 @@ const getCurrentUser = createAsyncThunk(
 
     authToken.set(persistedToken);
     try {
-      const currentUser = await contactsAPI.fetchCurrentUser();
+      const currentUser = await authAPI.fetchCurrentUser();
       return currentUser;
     } catch (err) {
       return rejectWithValue(err.message);

@@ -18,6 +18,8 @@ import Loader from "components/Loader";
 import { GlobalCSS } from "../src/common/GlobalCss";
 import { UserAccountPage } from "pages/UserAccountPage";
 import { getCurrentUser } from "redux/auth/authOperations";
+import { PrivateRoute } from "components/PrivateRoute";
+import { PublicRoute } from "components/PublicRoute";
 
 function App() {
   const dispatch = useDispatch();
@@ -33,22 +35,21 @@ function App() {
       <ThemeProvider theme={theme}>
         <Suspense fallback={<Loader />}>
           <Switch>
-            <Route path="/" exact>
+            <PublicRoute path="/" exact restricted>
               <HomePage />
-            </Route>
-            <Route path="/contacts" exact>
+            </PublicRoute>
+            <PrivateRoute path="/contacts" exact>
               <ContactsPage />
-            </Route>
-            <Route path="/login" exact>
+            </PrivateRoute>
+            <PublicRoute path="/login" exact restricted>
               <LoginPage />
-            </Route>
-            <Route path="/signup" exact>
+            </PublicRoute>
+            <PublicRoute path="/register" exact restricted>
               <SignUpPage />
-            </Route>
-
-            <Route path="/user-account">
+            </PublicRoute>
+            <PrivateRoute path="/user-account">
               <UserAccountPage />
-            </Route>
+            </PrivateRoute>
             <Route>
               <Redirect to="/" />
             </Route>

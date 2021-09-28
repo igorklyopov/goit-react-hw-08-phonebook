@@ -18,6 +18,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { useDispatch } from "react-redux";
 import { loginUser } from "redux/auth/authOperations";
+import { NavLink } from "react-router-dom";
 
 function LoginForm() {
   const dispatch = useDispatch();
@@ -125,9 +126,14 @@ function LoginForm() {
           </Button>
           <Grid container>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              <NavLink to="/register" className="link">
+                <Typography
+                  variant="body2"
+                  sx={{ color: "primary.main", textDecoration: "underline" }}
+                >
+                  Don't have an account? Sign Up
+                </Typography>
+              </NavLink>
             </Grid>
           </Grid>
         </Box>

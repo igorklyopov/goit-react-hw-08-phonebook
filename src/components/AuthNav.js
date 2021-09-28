@@ -24,7 +24,7 @@ function AuthNav() {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/signup" className="link">
+          <NavLink to="/register" className="link">
             Sign up
           </NavLink>
         </li>

@@ -16,6 +16,8 @@ import { PublicRoute } from "components/PublicRoute";
 import { getCurrentUser } from "redux/auth/authOperations";
 import { getIsChecksCurrentUser } from "redux/auth/authSelectors";
 import Loader from "components/Loader";
+import Header from "components/Header";
+import Footer from "components/Footer";
 
 const HomePage = lazy(() =>
   import("../src/pages/HomePage" /* webpackChunkName: "home-page" */)
@@ -33,10 +35,9 @@ const UserAccountPage = lazy(() =>
   import("pages/UserAccountPage" /* webpackChunkName: "user-account-page" */)
 );
 
-function App() {
+export default function App() {
   const dispatch = useDispatch();
   const isChecksCurrentUser = useSelector(getIsChecksCurrentUser);
-  console.log(isChecksCurrentUser);
 
   useEffect(() => {
     dispatch(getCurrentUser());
@@ -52,31 +53,35 @@ function App() {
             <Loader />
           ) : (
             <>
-              <Switch>
-                <PublicRoute path="/" redirectTo="/contacts" restricted exact>
-                  <HomePage />
-                </PublicRoute>
-                <PrivateRoute path="/contacts" exact>
-                  <ContactsPage />
-                </PrivateRoute>
-                <PublicRoute
-                  path="/login"
-                  redirectTo="/contacts"
-                  restricted
-                  exact
-                >
-                  <LoginPage />
-                </PublicRoute>
-                <PublicRoute path="/register" restricted exact>
-                  <SignUpPage />
-                </PublicRoute>
-                <PrivateRoute path="/user-account" exact>
-                  <UserAccountPage />
-                </PrivateRoute>
-                <Route>
-                  <Redirect to="/" />
-                </Route>
-              </Switch>
+              <Header />
+              <main>
+                <Switch>
+                  <PublicRoute path="/" redirectTo="/contacts" restricted exact>
+                    <HomePage />
+                  </PublicRoute>
+                  <PrivateRoute path="/contacts" exact>
+                    <ContactsPage />
+                  </PrivateRoute>
+                  <PublicRoute
+                    path="/login"
+                    redirectTo="/contacts"
+                    restricted
+                    exact
+                  >
+                    <LoginPage />
+                  </PublicRoute>
+                  <PublicRoute path="/register" restricted exact>
+                    <SignUpPage />
+                  </PublicRoute>
+                  <PrivateRoute path="/user-account" exact>
+                    <UserAccountPage />
+                  </PrivateRoute>
+                  <Route>
+                    <Redirect to="/" />
+                  </Route>
+                </Switch>
+              </main>
+              <Footer />
             </>
           )}
         </Suspense>
@@ -84,5 +89,3 @@ function App() {
     </>
   );
 }
-
-export default App;

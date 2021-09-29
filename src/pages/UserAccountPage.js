@@ -5,7 +5,7 @@ import { getUserName } from "redux/auth/authSelectors";
 import Footer from "components/Footer";
 import Header from "components/Header";
 
-function UserAccountPage() {
+export default function UserAccountPage() {
   const userName = useSelector(getUserName);
 
   return (
@@ -22,5 +22,3 @@ function UserAccountPage() {
     </>
   );
 }
-
-export { UserAccountPage };

@@ -8,7 +8,7 @@ import Footer from "components/Footer";
 import Header from "components/Header";
 import BasicGrid from "../components/ListC";
 
-function ContactsPage() {
+export default function ContactsPage() {
   return (
     <>
       <Header />
@@ -29,5 +29,3 @@ function ContactsPage() {
     </>
   );
 }
-
-export { ContactsPage };

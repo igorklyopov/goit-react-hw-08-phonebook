@@ -23,7 +23,7 @@ function UserMenu() {
           marginRight: "10px",
         }}
       >
-        <li
+        {/* <li
           style={{
             marginRight: "10px",
           }}
@@ -31,7 +31,7 @@ function UserMenu() {
           <NavLink to="/contacts" className="link">
             Contacts
           </NavLink>
-        </li>
+        </li> */}
         <li>
           <NavLink to="/user-account" className="link">
             <Avatar alt="" sx={{ bgcolor: "background.light" }}>

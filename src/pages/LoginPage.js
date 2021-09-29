@@ -2,7 +2,7 @@ import Footer from "components/Footer";
 import Header from "components/Header";
 import { LoginForm } from "../components/LoginForm";
 
-function LoginPage() {
+export default function LoginPage() {
   return (
     <>
       <Header />
@@ -14,5 +14,3 @@ function LoginPage() {
     </>
   );
 }
-
-export { LoginPage };

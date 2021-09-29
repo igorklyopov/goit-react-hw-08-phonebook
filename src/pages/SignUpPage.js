@@ -2,7 +2,7 @@ import Footer from "components/Footer";
 import Header from "components/Header";
 import { SignUpForm } from "components/SignUpForm";
 
-function SignUpPage() {
+export default function SignUpPage() {
   return (
     <>
       <Header />
@@ -14,5 +14,3 @@ function SignUpPage() {
     </>
   );
 }
-
-export { SignUpPage };

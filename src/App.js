@@ -15,7 +15,7 @@ import { PrivateRoute } from "components/PrivateRoute";
 import { PublicRoute } from "components/PublicRoute";
 import { getCurrentUser } from "redux/auth/authOperations";
 import { getIsChecksCurrentUser } from "redux/auth/authSelectors";
-import Loader from "components/Loader";
+import Loader from "components/ContactsList";
 import Header from "components/Header";
 import Footer from "components/Footer";
 

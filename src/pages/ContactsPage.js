@@ -1,19 +1,30 @@
-import Container from "../components/Container";
-import ContactsList from "../components/ContactsList";
-import ContactForm from "../components/ContactForm";
-import Filter from "../components/Filter";
-import Section from "../components/Section";
+import { useState } from "react";
+import { Container, Box } from "@mui/material";
 
-import Footer from "components/Footer";
-import Header from "components/Header";
-import BasicGrid from "../components/ListC";
-import ContactsAppBar from "components/ContactsAppBar";
+import ContactsList from "components/ContactsList";
+import ContactsBar from "components/ContactsBar";
+import AddContactModal from "components/AddContactModal";
 
 export default function ContactsPage() {
+  const [isOpenAddContactModal, setIsOpenAddContactModal] = useState(false);
+
   return (
-    <>
-      <h1>ContactsPage</h1>
-      <BasicGrid />
+    <Box component="section" sx={{ flexGrow: 1 }}>
+      <Container>
+        <h1>Contacts</h1>
+        <ContactsList />
+        <ContactsBar openAddContactModal={setIsOpenAddContactModal} />
+        <AddContactModal
+          isOpen={isOpenAddContactModal}
+          onClose={setIsOpenAddContactModal}
+        />
+      </Container>
+    </Box>
+  );
+}
+
+{
+  /* <BasicGrid />
       <Section>
         <Container>
           <h1 className="mainTitle">Phonebook</h1>
@@ -22,8 +33,5 @@ export default function ContactsPage() {
           <Filter />
           <ContactsList />
         </Container>
-      </Section>
-      <ContactsAppBar />
-    </>
-  );
+      </Section> */
 }

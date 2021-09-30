@@ -11,8 +11,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import InputBase from "@mui/material/InputBase";
 
 import { theme } from "common/theme";
+import ContactsFilter from "./ContactsFilter";
 
-const StyledAddContactBtn = styled(Fab)({
+const AddContactBtn = styled(Fab)({
   position: "absolute",
   zIndex: 1,
   top: -30,
@@ -21,7 +22,7 @@ const StyledAddContactBtn = styled(Fab)({
   margin: "0 auto",
 });
 
-const StyledSearchContactByName = styled("div")(({ theme }) => ({
+const SearchContactByName = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
   backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -36,7 +37,7 @@ const StyledSearchContactByName = styled("div")(({ theme }) => ({
   },
 }));
 
-const StyledSearchIconWrapper = styled("div")(({ theme }) => ({
+const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
   height: "100%",
   position: "absolute",
@@ -46,7 +47,7 @@ const StyledSearchIconWrapper = styled("div")(({ theme }) => ({
   justifyContent: "center",
 }));
 
-const StyledSearchContactInput = styled(InputBase)(({ theme }) => ({
+const SearchContactInput = styled(InputBase)(({ theme }) => ({
   color: "inherit",
   "& .MuiInputBase-input": {
     padding: theme.spacing(1, 1, 1, 0),
@@ -63,49 +64,33 @@ const StyledSearchContactInput = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-export default function ContactsAppBar() {
-  const isMobileScreen = useMediaQuery(theme.breakpoints.down("sm"));
-
+export default function ContactsBar({ openAddContactModal }) {
   const [isShowAddContactBtn, setIsShowAddContactBtn] = useState(true);
 
-  const onSearchContactFocus = () => {
-    if (!isMobileScreen) return;
-
-    setIsShowAddContactBtn(false);
-  };
-
-  const onSearchContactBlur = (e) => {
-    if (!isMobileScreen) return;
-
-    setIsShowAddContactBtn(true);
-    e.target.value = "";
+  const addContactBtnClick = () => {
+    openAddContactModal(true);
   };
 
   return (
     <>
-      <AppBar position="fixed" color="primary" sx={{ top: "auto", bottom: 0 }}>
-        <Toolbar>
+      <AppBar
+        component="div"
+        position="fixed"
+        color="primary"
+        sx={{ top: "auto", bottom: 0 }}
+      >
+        <Toolbar sx={{ justifyContent: "flex-end" }}>
           {isShowAddContactBtn && (
-            <StyledAddContactBtn
+            <AddContactBtn
               color="secondary"
               aria-label="add contact"
               sx={{ opacity: "0.8" }}
+              onClick={addContactBtnClick}
             >
               <AddIcon />
-            </StyledAddContactBtn>
+            </AddContactBtn>
           )}
-          <Box sx={{ flexGrow: 1 }} />
-          <StyledSearchContactByName>
-            <StyledSearchIconWrapper>
-              <SearchIcon />
-            </StyledSearchIconWrapper>
-            <StyledSearchContactInput
-              placeholder="Search contact"
-              inputProps={{ "aria-label": "Search contact by name" }}
-              onFocus={onSearchContactFocus}
-              onBlur={onSearchContactBlur}
-            />
-          </StyledSearchContactByName>
+          <ContactsFilter showAddContactBtn={setIsShowAddContactBtn} />
         </Toolbar>
       </AppBar>
     </>

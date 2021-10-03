@@ -38,39 +38,35 @@ export default function ContactsList() {
   }, [dispatch]);
 
   return (
-    // <Box component="section" sx={{ flexGrow: 1 }}>
-    <Container>
-      <Grid container component="ul" className="list">
-        {contacts.map(({ id, name, number }) => (
-          <ContactsItem
-            key={id}
-            container
-            item
-            component="li"
-            // xs={12}
-            //
-            // direction="row"
-            // justifyContent="center"
-            // alignItems="center"
-            // backgroundColor={"primary.main"}
+    <Grid container component="ul" className="list">
+      {contacts.map(({ id, name, number }) => (
+        <ContactsItem
+          key={id}
+          container
+          item
+          component="li"
+          // xs={12}
+          //
+          // direction="row"
+          // justifyContent="center"
+          // alignItems="center"
+          // backgroundColor={"primary.main"}
+        >
+          <p>{name}</p>
+          <a href={`tel:${number}`} className="link">
+            {number}
+          </a>
+          <IconButton aria-label="edit contact">
+            <EditIcon />
+          </IconButton>
+          <IconButton
+            aria-label="delete contact"
+            onClick={() => onDeleteContactBtnClick(id)}
           >
-            <p>{name}</p>
-            <a href={`tel:${number}`} className="link">
-              {number}
-            </a>
-            <IconButton aria-label="edit contact">
-              <EditIcon />
-            </IconButton>
-            <IconButton
-              aria-label="delete contact"
-              onClick={() => onDeleteContactBtnClick(id)}
-            >
-              <DeleteForeverIcon />
-            </IconButton>
-          </ContactsItem>
-        ))}
-      </Grid>
-    </Container>
-    // </Box>
+            <DeleteForeverIcon />
+          </IconButton>
+        </ContactsItem>
+      ))}
+    </Grid>
   );
 }

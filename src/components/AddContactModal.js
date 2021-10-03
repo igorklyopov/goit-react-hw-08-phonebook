@@ -119,6 +119,7 @@ export default function AddContactModal({ isOpen, onClose }) {
             id="contact-phone-number"
             label="Number"
             type="tel"
+            required
             fullWidth
             variant="standard"
             sx={{
@@ -126,6 +127,8 @@ export default function AddContactModal({ isOpen, onClose }) {
               borderTopLeftRadius: "5px",
               borderTopRightRadius: "5px",
             }}
+            value={number}
+            onChange={onInputChange}
           />
         </DialogContent>
         <DialogActions>

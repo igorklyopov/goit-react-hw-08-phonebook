@@ -52,19 +52,19 @@ const SearchContactInput = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function ContactsFilter({ showAddContactBtn }) {
-  const isMobileScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const isBeforeMediumScreen = useMediaQuery(theme.breakpoints.down("md"));
   const contactsFilterValue = useSelector(getFilter);
   const searchContactInputIsFilled = contactsFilterValue !== "";
   const dispatch = useDispatch();
 
   const onSearchContactFocus = () => {
-    if (!isMobileScreen) return;
+    if (!isBeforeMediumScreen) return;
 
     showAddContactBtn(false);
   };
 
   const onSearchContactBlur = (e) => {
-    if (!isMobileScreen || e.target.value.trim() !== "") return;
+    if (!isBeforeMediumScreen || e.target.value.trim() !== "") return;
 
     showAddContactBtn(true);
     if (e.target.value.trim() === "") e.target.value = "";

@@ -1,46 +1,37 @@
-import { NavLink } from "react-router-dom";
-import Typography from "@mui/material/Typography";
-import Toolbar from "@mui/material/Toolbar";
 import { useSelector } from "react-redux";
-import { getIsLoggedIn } from "redux/auth/authSelectors";
+import { useMediaQuery } from "@mui/material";
 
-function SiteNav() {
+import { getIsLoggedIn } from "redux/auth/authSelectors";
+import { theme } from "common/theme";
+import NavList from "./NavList";
+import NavItem from "./NavItem";
+import NavLinkRouter from "./NavLinkRouter";
+import Logo from "./Logo";
+
+export default function SiteNav() {
   const isLoggedIn = useSelector(getIsLoggedIn);
+  const isAfterSmallScreen = useMediaQuery(theme.breakpoints.up("sm"));
 
   return (
-    <Toolbar component="nav">
-      <ul
-        className="list"
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          marginRight: "10px",
-        }}
-      >
-        <li
-          style={{
-            marginRight: "10px",
-          }}
+    <NavList className="list">
+      <NavItem>
+        <NavLinkRouter
+          homeLink
+          to="/"
+          className="link"
+          sx={{ display: "flex", alignItems: "center" }}
         >
-          <NavLink to="/" className="link">
-            Phonebook
-          </NavLink>
-        </li>
-        {isLoggedIn && (
-          <li
-            style={{
-              marginRight: "10px",
-            }}
-          >
-            <NavLink to="/contacts" className="link">
-              Contacts
-            </NavLink>
-          </li>
-        )}
-      </ul>
-    </Toolbar>
+          <Logo />
+          {isAfterSmallScreen && "Phonebook"}
+        </NavLinkRouter>
+      </NavItem>
+      {isLoggedIn && (
+        <NavItem>
+          <NavLinkRouter to="/contacts" className="link">
+            Contacts
+          </NavLinkRouter>
+        </NavItem>
+      )}
+    </NavList>
   );
 }
-
-export { SiteNav };

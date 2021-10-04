@@ -15,6 +15,7 @@ import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 import { deleteContact, getContacts } from "redux/contacts/contactsOperations";
 import { getFilteredContacts } from "redux/contacts/contactsSelectors";
+import { useLocation } from "react-router";
 
 const ContactsItem = styled(Grid)(({ theme }) => ({
   ...theme.typography.body2,
@@ -31,11 +32,12 @@ const ContactsItem = styled(Grid)(({ theme }) => ({
 export default function ContactsList() {
   const contacts = useSelector(getFilteredContacts);
   const dispatch = useDispatch();
+  const location = useLocation();
   const onDeleteContactBtnClick = (id) => dispatch(deleteContact(id));
 
   useEffect(() => {
-    dispatch(getContacts());
-  }, [dispatch]);
+    if (location.pathname === "/contacts") dispatch(getContacts());
+  }, [dispatch, location.pathname]);
 
   return (
     <Grid container component="ul" className="list">

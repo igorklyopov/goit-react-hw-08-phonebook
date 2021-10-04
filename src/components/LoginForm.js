@@ -19,7 +19,7 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "redux/auth/authOperations";
 import { NavLink } from "react-router-dom";
 
-function LoginForm() {
+export default function LoginForm() {
   const dispatch = useDispatch();
 
   const initialAuthValues = {
@@ -140,5 +140,3 @@ function LoginForm() {
     </Container>
   );
 }
-
-export { LoginForm };

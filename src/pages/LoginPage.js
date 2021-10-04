@@ -1,11 +1,9 @@
-import Footer from "components/Footer";
-import Header from "components/Header";
-import { LoginForm } from "../components/LoginForm";
+import LoginForm from "components/LoginForm";
 
 export default function LoginPage() {
   return (
     <>
-      <h1>LoginPage</h1>
+      <h1 className="visuallyHidden">Login page</h1>
       <LoginForm />
     </>
   );

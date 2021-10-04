@@ -14,10 +14,14 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import { addContact } from "redux/contacts/contactsOperations";
 import { getContacts } from "redux/contacts/contactsSelectors";
+import Notification from "./Notification";
+import { getDuplicateContact } from "utils/getDuplicateContact";
+import AddContactNotifications from "./AddContactNotifications";
 
 export default function AddContactModal({ isOpen, onClose }) {
   const [name, setName] = useState("");
   const [number, setNumber] = useState("");
+  const [isDuplicateContact, setIsDuplicateContact] = useState(true);
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
@@ -28,9 +32,11 @@ export default function AddContactModal({ isOpen, onClose }) {
 
   const onAddContactModalClose = () => {
     onClose(false);
+    reset();
+    if (isDuplicateContact) setIsDuplicateContact(true);
   };
 
-  const onInputChange = (e) => {
+  const onAddContactInputChange = (e) => {
     if (e.target.id === "contact-name") setName(e.target.value);
     if (e.target.id === "contact-phone-number") setNumber(e.target.value);
   };
@@ -38,34 +44,20 @@ export default function AddContactModal({ isOpen, onClose }) {
   const onFormSubmit = (e) => {
     e.preventDefault();
 
-    const duplicateContactName = contacts.find(
-      (contact) => contact.name === name
-    );
-    const duplicateContactNumber = contacts.find(
-      (contact) => contact.number === number
-    );
-
-    if (duplicateContactName) {
-      alert(`${name} is already in contacts!`);
-      reset();
-      return;
-    }
-    if (duplicateContactNumber) {
-      alert(
-        `${number} is already in contacts! (${duplicateContactNumber.name} has this number)`
-      );
-      reset();
-      return;
-    }
-
     const contactData = {
       name,
       number,
     };
 
-    dispatch(addContact(contactData));
+    const duplicateContact = getDuplicateContact(contacts, name, number);
 
-    reset();
+    setIsDuplicateContact(duplicateContact);
+
+    if (!isDuplicateContact) {
+      dispatch(addContact(contactData));
+    } else {
+      return;
+    }
 
     // onClose(false);
   };
@@ -112,7 +104,7 @@ export default function AddContactModal({ isOpen, onClose }) {
             variant="standard"
             sx={{ backgroundColor: "#ffffff" }}
             value={name}
-            onChange={onInputChange}
+            onChange={onAddContactInputChange}
           />
           <TextField
             margin="dense"
@@ -128,7 +120,11 @@ export default function AddContactModal({ isOpen, onClose }) {
               borderTopRightRadius: "5px",
             }}
             value={number}
-            onChange={onInputChange}
+            onChange={onAddContactInputChange}
+          />
+          <AddContactNotifications
+            isDuplicateContact={isDuplicateContact}
+            contacts={contacts}
           />
         </DialogContent>
         <DialogActions>

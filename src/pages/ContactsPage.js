@@ -11,7 +11,7 @@ export default function ContactsPage() {
   return (
     <Box component="section" sx={{ flexGrow: 1 }}>
       <Container>
-        <h1>Contacts</h1>
+        <h1 className="visuallyHidden">Contacts</h1>
         <ContactsList />
         <ContactsBar openAddContactModal={setIsOpenAddContactModal} />
         <AddContactModal

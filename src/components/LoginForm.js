@@ -60,7 +60,6 @@ export default function LoginForm() {
 
   return (
     <Container component="div" maxWidth="xs">
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 8,

@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 
 import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -18,7 +17,6 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 import { registerUser } from "redux/auth/authOperations";
-import contactsAPI from "services/contactsAPI";
 
 export default function SignUpForm() {
   const dispatch = useDispatch();
@@ -62,7 +60,6 @@ export default function SignUpForm() {
 
   return (
     <Container component="div" maxWidth="xs">
-      <CssBaseline />
       <Box
         sx={{
           marginTop: 8,

@@ -9,14 +9,23 @@ import {
   DialogContent,
   DialogTitle,
   DialogContentText,
+  FormControl,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
 import { addContact } from "redux/contacts/contactsOperations";
 import { getContacts } from "redux/contacts/contactsSelectors";
-import Notification from "./Notification";
+
 import { getDuplicateContact } from "utils/getDuplicateContact";
 import AddContactNotifications from "./AddContactNotifications";
+
+import { styled } from "@mui/system";
+import { theme } from "common/theme";
+import { StyledFormInput } from "./StyledFormInput";
+
+const AddContactModalCommonStyles = {
+  backgroundColor: theme.palette.background.default,
+};
 
 export default function AddContactModal({ isOpen, onClose }) {
   const [name, setName] = useState("");
@@ -77,7 +86,7 @@ export default function AddContactModal({ isOpen, onClose }) {
             position: "absolute",
             right: 8,
             top: 8,
-            color: (theme) => theme.palette.grey[500],
+            color: (theme) => theme.palette.primary.main,
           }}
         >
           <CloseIcon />
@@ -85,13 +94,25 @@ export default function AddContactModal({ isOpen, onClose }) {
         {/* <DialogTitle id="add-edit-contact-form-title">
           {contact ? "Editing contact" : "Adding contact"}
         </DialogTitle> */}
-        <DialogTitle>Adding contact</DialogTitle>
-        <DialogContent>
+        <DialogTitle
+          sx={{
+            ...AddContactModalCommonStyles,
+            color: theme.palette.primary.main,
+          }}
+        >
+          Adding contact
+        </DialogTitle>
+        <DialogContent
+          sx={{
+            ...AddContactModalCommonStyles,
+          }}
+        >
           {/* <DialogContentText>
             To subscribe to this website, please enter your email address here.
             We will send updates occasionally.
           </DialogContentText> */}
-          <TextField
+          {/* <FormControl> */}
+          <StyledFormInput
             autoFocus
             margin="dense"
             id="contact-name"
@@ -101,34 +122,48 @@ export default function AddContactModal({ isOpen, onClose }) {
             title="Имя может состоять только из букв, апострофа, тире и пробелов, не должно начинаться или оканчиваться пробелом. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
             required
             fullWidth
-            variant="standard"
-            sx={{ backgroundColor: "#ffffff" }}
+            variant="outlined"
+            // sx={{
+            //   ...commonFormInputStyles,
+            // }}
             value={name}
             onChange={onAddContactInputChange}
           />
-          <TextField
+          <StyledFormInput
             margin="dense"
             id="contact-phone-number"
             label="Number"
             type="tel"
             required
             fullWidth
-            variant="standard"
-            sx={{
-              backgroundColor: "#ffffff",
-              borderTopLeftRadius: "5px",
-              borderTopRightRadius: "5px",
-            }}
+            variant="outlined"
+            // sx={{
+            //   ...commonFormInputStyles,
+            // }}
             value={number}
             onChange={onAddContactInputChange}
           />
+          {/* </FormControl> */}
           <AddContactNotifications
             isDuplicateContact={isDuplicateContact}
             contacts={contacts}
           />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={onFormSubmit} sx={{ backgroundColor: "#ffffff" }}>
+        <DialogActions
+          sx={{
+            ...AddContactModalCommonStyles,
+          }}
+        >
+          <Button
+            onClick={onFormSubmit}
+            variant="outlined"
+            sx={{
+              "&:hover, &:focus": {
+                color: theme.palette.primary.contrastText,
+                backgroundColor: theme.palette.primary.main,
+              },
+            }}
+          >
             Save
           </Button>
         </DialogActions>

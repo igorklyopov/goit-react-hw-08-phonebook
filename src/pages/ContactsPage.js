@@ -5,6 +5,8 @@ import ContactsList from "components/ContactsList";
 import ContactsBar from "components/ContactsBar";
 import AddContactModal from "components/AddContactModal";
 
+import Form from "components/Form";
+
 export default function ContactsPage() {
   const [isOpenAddContactModal, setIsOpenAddContactModal] = useState(false);
 
@@ -18,6 +20,7 @@ export default function ContactsPage() {
           isOpen={isOpenAddContactModal}
           onClose={setIsOpenAddContactModal}
         />
+        <Form />
       </Container>
     </Box>
   );

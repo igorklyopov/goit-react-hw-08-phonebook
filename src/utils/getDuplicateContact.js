@@ -28,5 +28,5 @@ export const getDuplicateContact = (contacts, name, number) => {
     };
   }
 
-  return true;
+  return null;
 };

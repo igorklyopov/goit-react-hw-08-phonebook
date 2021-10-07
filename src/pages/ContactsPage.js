@@ -5,22 +5,28 @@ import ContactsList from "components/ContactsList";
 import ContactsBar from "components/ContactsBar";
 import AddContactModal from "components/AddContactModal";
 
-import Form from "components/Form";
+import Form from "components/AddContactForm";
 
 export default function ContactsPage() {
   const [isOpenAddContactModal, setIsOpenAddContactModal] = useState(false);
+  // const [addContactInitialValue, setAddContactInitialValue] = useState("");
+  const [currentContactId, setCurrentContactId] = useState(null);
 
   return (
     <Box component="section" sx={{ flexGrow: 1 }}>
       <Container>
         <h1 className="visuallyHidden">Contacts</h1>
-        <ContactsList />
+        <ContactsList
+          openAddContactModal={setIsOpenAddContactModal}
+          setCurrentContactId={setCurrentContactId}
+        />
         <ContactsBar openAddContactModal={setIsOpenAddContactModal} />
         <AddContactModal
           isOpen={isOpenAddContactModal}
           onClose={setIsOpenAddContactModal}
+          currentContactId={currentContactId}
+          setCurrentContactId={setCurrentContactId}
         />
-        <Form />
       </Container>
     </Box>
   );

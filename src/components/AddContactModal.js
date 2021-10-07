@@ -1,36 +1,25 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Dialog,
-  DialogActions,
-  Button,
-  IconButton,
-  TextField,
-  DialogContent,
-  DialogTitle,
-  DialogContentText,
-  FormControl,
-} from "@mui/material";
+import { Dialog, IconButton, DialogContent, DialogTitle } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 
-import { addContact } from "redux/contacts/contactsOperations";
+import { addContact, editContact } from "redux/contacts/contactsOperations";
 import { getContacts } from "redux/contacts/contactsSelectors";
-
-import { getDuplicateContact } from "utils/getDuplicateContact";
-import AddContactNotifications from "./AddContactNotifications";
-
 import { theme } from "common/theme";
-import { StyledFormInput } from "./StyledFormInput";
-
-import { useForm, Controller, setValue } from "react-hook-form";
-
-import AddContactForm from "./Form";
+import { getDuplicateContact } from "utils/getDuplicateContact";
+import AddContactForm from "./AddContactForm";
+import AddContactNotifications from "./AddContactNotifications";
 
 const AddContactModalCommonStyles = {
   backgroundColor: theme.palette.background.default,
 };
 
-export default function AddContactModal({ isOpen, onClose }) {
+export default function AddContactModal({
+  isOpen,
+  onClose,
+  currentContactId,
+  setCurrentContactId,
+}) {
   const [isDuplicateContact, setIsDuplicateContact] = useState(null);
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
@@ -38,6 +27,7 @@ export default function AddContactModal({ isOpen, onClose }) {
   const onAddContactModalClose = () => {
     onClose(false);
     setIsDuplicateContact(null);
+    setCurrentContactId(null);
   };
 
   const onAddContactFormSubmit = (data) => {
@@ -47,6 +37,17 @@ export default function AddContactModal({ isOpen, onClose }) {
       data.number
     );
     setIsDuplicateContact(duplicateContact);
+
+    if (currentContactId) {
+      dispatch(
+        editContact({
+          id: currentContactId,
+          ...data,
+        })
+      );
+
+      return;
+    }
 
     if (!duplicateContact) {
       dispatch(addContact(data));
@@ -86,7 +87,10 @@ export default function AddContactModal({ isOpen, onClose }) {
             ...AddContactModalCommonStyles,
           }}
         >
-          <AddContactForm onSubmit={onAddContactFormSubmit} />
+          <AddContactForm
+            onSubmit={onAddContactFormSubmit}
+            currentContactId={currentContactId}
+          />
           <AddContactNotifications
             isDuplicateContact={isDuplicateContact}
             contacts={contacts}

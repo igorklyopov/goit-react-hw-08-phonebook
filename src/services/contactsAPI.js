@@ -18,10 +18,19 @@ async function deleteContactData(contactId) {
   return data;
 }
 
+async function patchContactData(contactId, { name, number }) {
+  const { data } = await axios.patch(`/contacts/${contactId}`, {
+    name,
+    number,
+  });
+  return data;
+}
+
 const contactsAPI = {
   fetchContactsData,
   postContactData,
   deleteContactData,
+  patchContactData,
 };
 
 export default contactsAPI;

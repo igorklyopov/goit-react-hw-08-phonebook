@@ -1,32 +1,19 @@
-import { useEffect, useState } from "react";
-import {
-  Dialog,
-  DialogActions,
-  Box,
-  Button,
-  IconButton,
-  TextField,
-  DialogContent,
-  DialogTitle,
-  DialogContentText,
-  FormControl,
-} from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { addContact } from "redux/contacts/contactsOperations";
-import { getContacts } from "redux/contacts/contactsSelectors";
+import { Box, Button } from "@mui/material";
 
-import { getDuplicateContact } from "utils/getDuplicateContact";
-import AddContactNotifications from "./AddContactNotifications";
+import { getFilteredContacts } from "redux/contacts/contactsSelectors";
 import { theme } from "common/theme";
 import { StyledFormInput } from "./StyledFormInput";
 
-const AddContactModalCommonStyles = {
-  backgroundColor: theme.palette.background.default,
-};
-
-export default function AddContactForm({ onSubmit }) {
+export default function AddContactForm({ onSubmit, currentContactId }) {
   const { handleSubmit, control, setValue } = useForm();
+
+  const contacts = useSelector(getFilteredContacts);
+  const getCurrentContactById = (contacts) => {
+    return contacts.find((contact) => contact.id === currentContactId);
+  };
+  const currentContact = getCurrentContactById(contacts);
 
   const onAddContactInputChange = (e) => {
     setValue(e.target.name, e.target.value);
@@ -52,11 +39,15 @@ export default function AddContactForm({ onSubmit }) {
     /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
 
   return (
-    <form onSubmit={handleSubmit(onSubmitContactData)}>
+    <Box
+      component="form"
+      onSubmit={handleSubmit(onSubmitContactData)}
+      sx={{ display: "flex", justifyContent: "flex-end", flexWrap: "wrap" }}
+    >
       <Controller
         name="name"
         control={control}
-        defaultValue=""
+        defaultValue={currentContact ? currentContact.name : ""}
         render={({ field: { onChange, value }, fieldState: { error } }) => (
           <StyledFormInput
             autoFocus
@@ -80,7 +71,7 @@ export default function AddContactForm({ onSubmit }) {
       <Controller
         name="number"
         control={control}
-        defaultValue=""
+        defaultValue={currentContact ? currentContact.number : ""}
         render={({ field: { onChange, value }, fieldState: { error } }) => (
           <StyledFormInput
             variant="outlined"
@@ -102,21 +93,19 @@ export default function AddContactForm({ onSubmit }) {
         }}
       />
 
-      <div>
-        <Button
-          // onClick={handleSubmit(onSubmit)}
-          type="submit"
-          variant="outlined"
-          sx={{
-            "&:hover, &:focus": {
-              color: theme.palette.primary.contrastText,
-              backgroundColor: theme.palette.primary.main,
-            },
-          }}
-        >
-          Save
-        </Button>
-      </div>
-    </form>
+      <Button
+        type="submit"
+        variant="outlined"
+        sx={{
+          "&:hover, &:focus": {
+            color: theme.palette.primary.contrastText,
+            backgroundColor: theme.palette.primary.main,
+          },
+          marginTop: "5px",
+        }}
+      >
+        Save
+      </Button>
+    </Box>
   );
 }

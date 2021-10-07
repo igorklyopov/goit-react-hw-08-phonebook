@@ -13,7 +13,11 @@ import {
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
-import { deleteContact, getContacts } from "redux/contacts/contactsOperations";
+import {
+  deleteContact,
+  getContacts,
+  editContact,
+} from "redux/contacts/contactsOperations";
 import { getFilteredContacts } from "redux/contacts/contactsSelectors";
 import { useLocation } from "react-router";
 
@@ -29,11 +33,19 @@ const ContactsItem = styled(Grid)(({ theme }) => ({
   marginBottom: "5px",
 }));
 
-export default function ContactsList() {
+export default function ContactsList({
+  openAddContactModal,
+  setCurrentContactId,
+}) {
   const contacts = useSelector(getFilteredContacts);
   const dispatch = useDispatch();
   const location = useLocation();
+
   const onDeleteContactBtnClick = (id) => dispatch(deleteContact(id));
+  const onEditContactBtnClick = (id) => {
+    openAddContactModal(true);
+    setCurrentContactId(id);
+  };
 
   useEffect(() => {
     if (location.pathname === "/contacts") dispatch(getContacts());
@@ -58,7 +70,10 @@ export default function ContactsList() {
           <a href={`tel:${number}`} className="link">
             {number}
           </a>
-          <IconButton aria-label="edit contact">
+          <IconButton
+            aria-label="edit contact"
+            onClick={() => onEditContactBtnClick(id)}
+          >
             <EditIcon />
           </IconButton>
           <IconButton

@@ -38,4 +38,16 @@ const deleteContact = createAsyncThunk(
   }
 );
 
-export { getContacts, addContact, deleteContact };
+const editContact = createAsyncThunk(
+  "contacts/editContact",
+  async ({ id, name, number }, { rejectWithValue }) => {
+    try {
+      const contact = await contactsAPI.patchContactData(id, { name, number });
+      return contact;
+    } catch (err) {
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
+export { getContacts, addContact, deleteContact, editContact };

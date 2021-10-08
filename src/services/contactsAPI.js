@@ -34,4 +34,3 @@ const contactsAPI = {
 };
 
 export default contactsAPI;
-//Update existing contact

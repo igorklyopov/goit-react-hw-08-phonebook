@@ -4,6 +4,7 @@ import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 
 import { logOutUser } from "redux/auth/authOperations";
 import { getUserName } from "redux/auth/authSelectors";
+import { theme } from "common/theme";
 import NavList from "./NavList";
 import NavItem from "./NavItem";
 import NavLinkRouter from "./NavLinkRouter";
@@ -25,7 +26,15 @@ export default function UserMenu() {
           </NavLinkRouter>
         </NavItem>
         <NavItem>
-          <IconButton aria-label="Log out" onClick={onLogOutClick}>
+          <IconButton
+            aria-label="Log out"
+            sx={{
+              "&:hover, &:focus": {
+                color: theme.palette.background.default,
+              },
+            }}
+            onClick={onLogOutClick}
+          >
             <ExitToAppIcon />
           </IconButton>
         </NavItem>

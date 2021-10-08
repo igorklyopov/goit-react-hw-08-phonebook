@@ -1,11 +1,21 @@
+import { Box } from "@mui/system";
+import { Container, Typography } from "@mui/material";
+
 export default function HomePage() {
   return (
-    <>
-      <h1 className="visuallyHidden">Phonebook home page</h1>
-      <p style={{ marginTop: "200px" }}>
-        Welcome to the Phonebook👋 Now you won't forget your contacts! Please
-        register or login to access your contact list!
-      </p>
-    </>
+    <Box component="section" sx={{ pt: "70px" }}>
+      <Container>
+        <h1 className="visuallyHidden">Phonebook home page</h1>
+        <Typography
+          component="p"
+          variant="h6"
+          align="center"
+          sx={{ p: "20px" }}
+        >
+          Welcome to the Phonebook👋! Now you won't forget your contacts! Please
+          register or log in to access your contact list!
+        </Typography>
+      </Container>
+    </Box>
   );
 }

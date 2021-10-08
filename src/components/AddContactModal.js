@@ -5,8 +5,8 @@ import CloseIcon from "@mui/icons-material/Close";
 
 import { addContact, editContact } from "redux/contacts/contactsOperations";
 import { getContacts } from "redux/contacts/contactsSelectors";
-import { theme } from "common/theme";
 import { getDuplicateContact } from "utils/getDuplicateContact";
+import { theme } from "common/theme";
 import AddContactForm from "./AddContactForm";
 import AddContactNotifications from "./AddContactNotifications";
 
@@ -21,6 +21,7 @@ export default function AddContactModal({
   setCurrentContactId,
 }) {
   const [isDuplicateContact, setIsDuplicateContact] = useState(null);
+  const [isContactSaved, setIsContactSaved] = useState(false);
   const contacts = useSelector(getContacts);
   const dispatch = useDispatch();
 
@@ -28,6 +29,7 @@ export default function AddContactModal({
     onClose(false);
     setIsDuplicateContact(null);
     setCurrentContactId(null);
+    setIsContactSaved(false);
   };
 
   const onAddContactFormSubmit = (data) => {
@@ -44,7 +46,8 @@ export default function AddContactModal({
           id: currentContactId,
           ...data,
         })
-      );
+      ).unwrap();
+      setIsContactSaved(true);
 
       return;
     }
@@ -71,16 +74,14 @@ export default function AddContactModal({
         >
           <CloseIcon />
         </IconButton>
-        {/* <DialogTitle id="add-edit-contact-form-title">
-          {contact ? "Editing contact" : "Adding contact"}
-        </DialogTitle> */}
         <DialogTitle
+          id="add-edit-contact-form-title"
           sx={{
             ...AddContactModalCommonStyles,
             color: theme.palette.primary.main,
           }}
         >
-          Adding contact
+          {currentContactId ? "Editing contact" : "Adding contact"}
         </DialogTitle>
         <DialogContent
           sx={{
@@ -90,8 +91,11 @@ export default function AddContactModal({
           <AddContactForm
             onSubmit={onAddContactFormSubmit}
             currentContactId={currentContactId}
+            isContactSaved={isContactSaved}
+            setIsContactSaved={setIsContactSaved}
           />
           <AddContactNotifications
+            currentContactId={currentContactId}
             isDuplicateContact={isDuplicateContact}
             contacts={contacts}
           />

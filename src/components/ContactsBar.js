@@ -1,16 +1,11 @@
 import { useState } from "react";
-import useMediaQuery from "@mui/material/useMediaQuery";
-import { alpha } from "@mui/material/styles";
+
 import { styled } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Fab from "@mui/material/Fab";
 import AddIcon from "@mui/icons-material/Add";
-import SearchIcon from "@mui/icons-material/Search";
-import InputBase from "@mui/material/InputBase";
 
-import { theme } from "common/theme";
 import ContactsFilter from "./ContactsFilter";
 
 const AddContactBtn = styled(Fab)({
@@ -43,7 +38,6 @@ export default function ContactsBar({ openAddContactModal }) {
             <AddContactBtn
               color="secondary"
               aria-label="add contact"
-              // sx={{ opacity: "0.8" }}
               onClick={addContactBtnClick}
             >
               <AddIcon />

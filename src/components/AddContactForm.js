@@ -1,12 +1,18 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useForm, Controller } from "react-hook-form";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Zoom } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
 
 import { getFilteredContacts } from "redux/contacts/contactsSelectors";
 import { theme } from "common/theme";
 import { StyledFormInput } from "./StyledFormInput";
 
-export default function AddContactForm({ onSubmit, currentContactId }) {
+export default function AddContactForm({
+  onSubmit,
+  currentContactId,
+  isContactSaved,
+  setIsContactSaved,
+}) {
   const { handleSubmit, control, setValue } = useForm();
 
   const contacts = useSelector(getFilteredContacts);
@@ -17,11 +23,12 @@ export default function AddContactForm({ onSubmit, currentContactId }) {
 
   const onAddContactInputChange = (e) => {
     setValue(e.target.name, e.target.value);
+    setIsContactSaved(false);
   };
 
   const onSubmitContactData = (data) => {
     onSubmit(data);
-    // reset();
+    reset();
   };
 
   const reset = () => {
@@ -30,11 +37,11 @@ export default function AddContactForm({ onSubmit, currentContactId }) {
   };
 
   const inputNameErrMessage =
-    "Имя может состоять только из букв, апострофа, тире и пробелов, не должно начинаться или оканчиваться пробелом. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п.";
+    "The name can only consist of letters, apostrophes, dashes and spaces, it must not start or end with a space. For example, Adrian, Jacob Mercer, Charles de Buz de Castelmore d'Artagnan, etc.";
   const inputNameValidationPattern =
     /^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я ]*)*$/;
   const inputNumberErrMessage =
-    "Номер телефона должен состоять из 5 больше цифр и может содержать пробелы, тире, круглые скобки, и может начинаться с +, не должен начинаться или оканчиваться пробелом";
+    "The phone number must be at least 5 digits long and can contain spaces, hyphens, parentheses and can start with +, must not start or end with a space.";
   const inputNumberValidationPattern =
     /\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}/;
 
@@ -96,6 +103,7 @@ export default function AddContactForm({ onSubmit, currentContactId }) {
       <Button
         type="submit"
         variant="outlined"
+        aria-label="save"
         sx={{
           "&:hover, &:focus": {
             color: theme.palette.primary.contrastText,
@@ -104,7 +112,11 @@ export default function AddContactForm({ onSubmit, currentContactId }) {
           marginTop: "5px",
         }}
       >
-        Save
+        {isContactSaved ? (
+          <Zoom in={isContactSaved}>{<CheckIcon />}</Zoom>
+        ) : (
+          "Save"
+        )}
       </Button>
     </Box>
   );

@@ -1,25 +1,14 @@
 import { useEffect } from "react";
+import { useLocation } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import { styled } from "@mui/material/styles";
-import { shadows } from "@mui/system";
-import {
-  Box,
-  Container,
-  Grid,
-  Paper,
-  Typography,
-  IconButton,
-} from "@mui/material";
+import { Grid, Typography, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
-import {
-  deleteContact,
-  getContacts,
-  editContact,
-} from "redux/contacts/contactsOperations";
+import { theme } from "common/theme";
+import { deleteContact, getContacts } from "redux/contacts/contactsOperations";
 import { getFilteredContacts } from "redux/contacts/contactsSelectors";
-import { useLocation } from "react-router";
 
 const ContactsItem = styled(Grid)(({ theme }) => ({
   ...theme.typography.body2,
@@ -30,8 +19,25 @@ const ContactsItem = styled(Grid)(({ theme }) => ({
   color: theme.palette.text.secondary,
   backgroundColor: theme.palette.primary.main,
   borderRadius: "5px",
-  marginBottom: "5px",
+  marginBottom: theme.spacing(1),
+  boxShadow: theme.shadows[1],
+
+  transitionProperty: "transform",
+  transitionDuration: "300ms",
+  transitionTimingFunction: "ease-out",
+  "&:hover, &:focus": {
+    boxShadow: theme.shadows[3],
+    transform: "scale(1.02)",
+  },
 }));
+
+const ContactsWrap = styled("div")({
+  display: "flex",
+  flexWrap: "wrap",
+  flexGrow: 1,
+  flexDirection: "row",
+  alignItems: "center",
+});
 
 export default function ContactsList({
   openAddContactModal,
@@ -52,36 +58,60 @@ export default function ContactsList({
   }, [dispatch, location.pathname]);
 
   return (
-    <Grid container component="ul" className="list">
+    <Grid
+      container
+      component="ul"
+      className="list"
+      sx={{ maxWidth: "600px", ml: "auto", mr: "auto" }}
+    >
       {contacts.map(({ id, name, number }) => (
-        <ContactsItem
-          key={id}
-          container
-          item
-          component="li"
-          // xs={12}
-          //
-          // direction="row"
-          // justifyContent="center"
-          // alignItems="center"
-          // backgroundColor={"primary.main"}
-        >
-          <p>{name}</p>
-          <a href={`tel:${number}`} className="link">
-            {number}
-          </a>
-          <IconButton
-            aria-label="edit contact"
-            onClick={() => onEditContactBtnClick(id)}
-          >
-            <EditIcon />
-          </IconButton>
-          <IconButton
-            aria-label="delete contact"
-            onClick={() => onDeleteContactBtnClick(id)}
-          >
-            <DeleteForeverIcon />
-          </IconButton>
+        <ContactsItem key={id} container item component="li">
+          <ContactsWrap sx={{ justifyContent: "space-between" }}>
+            <ContactsWrap sx={{ justifyContent: "space-evenly" }}>
+              <Typography component="span" sx={{ mr: "1%" }}>
+                {name}
+              </Typography>
+              <Typography
+                component="a"
+                sx={{
+                  mr: "1%",
+                  "&:hover, &:focus": {
+                    color: theme.palette.background.default,
+                  },
+                }}
+                href={`tel:${number}`}
+                className="link"
+              >
+                {number}
+              </Typography>
+            </ContactsWrap>
+            <ContactsWrap sx={{ justifyContent: "space-evenly" }}>
+              <IconButton
+                aria-label="edit contact"
+                onClick={() => onEditContactBtnClick(id)}
+                sx={{
+                  mr: "1%",
+                  "&:hover, &:focus": {
+                    color: theme.palette.background.default,
+                  },
+                }}
+              >
+                <EditIcon />
+              </IconButton>
+              <IconButton
+                aria-label="delete contact"
+                onClick={() => onDeleteContactBtnClick(id)}
+                sx={{
+                  mr: "1%",
+                  "&:hover, &:focus": {
+                    color: theme.palette.background.default,
+                  },
+                }}
+              >
+                <DeleteForeverIcon />
+              </IconButton>
+            </ContactsWrap>
+          </ContactsWrap>
         </ContactsItem>
       ))}
     </Grid>

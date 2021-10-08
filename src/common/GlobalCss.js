@@ -12,6 +12,7 @@ const GlobalCSS = {
       sans-serif`,
     lineHeight: "1.3",
     backgroundColor: theme.palette.background.default,
+    color: theme.palette.text.primary,
   },
   footer: {
     flexGrow: 0,

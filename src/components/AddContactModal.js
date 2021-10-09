@@ -53,7 +53,8 @@ export default function AddContactModal({
     }
 
     if (!duplicateContact) {
-      dispatch(addContact(data));
+      dispatch(addContact(data)).unwrap();
+      setIsContactSaved(true);
     } else {
       return;
     }

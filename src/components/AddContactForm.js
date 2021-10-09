@@ -104,12 +104,17 @@ export default function AddContactForm({
         type="submit"
         variant="outlined"
         aria-label="save"
+        disabled={isContactSaved}
         sx={{
           "&:hover, &:focus": {
             color: theme.palette.primary.contrastText,
             backgroundColor: theme.palette.primary.main,
           },
           marginTop: "5px",
+          "&.Mui-disabled": {
+            color: theme.palette.text.secondary,
+            backgroundColor: theme.palette.primary.main,
+          },
         }}
       >
         {isContactSaved ? (

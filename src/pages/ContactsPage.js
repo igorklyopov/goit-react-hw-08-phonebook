@@ -14,7 +14,7 @@ export default function ContactsPage() {
   const contacts = useSelector(getContacts);
 
   return (
-    <Box component="section" sx={{ flexGrow: 1, paddingTop: "70px" }}>
+    <Box component="section" sx={{ flexGrow: 1, paddingTop: "80px" }}>
       <Container>
         <h1 className="visuallyHidden">Contacts</h1>
         {contacts.length > 0 ? (

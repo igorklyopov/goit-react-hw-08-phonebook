@@ -56,7 +56,7 @@ export default function ContactsList({
       className="list"
       sx={{ maxWidth: "600px", ml: "auto", mr: "auto" }}
     >
-      {contacts.map(({ id, name, number }) => (
+      {contacts?.map(({ id, name, number }) => (
         <ContactsItem key={id} container item component="li">
           <ContactsWrap sx={{ justifyContent: "space-between" }}>
             <ContactsWrap sx={{ justifyContent: "space-evenly" }}>

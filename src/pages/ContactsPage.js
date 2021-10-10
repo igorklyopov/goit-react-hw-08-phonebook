@@ -13,6 +13,7 @@ export default function ContactsPage() {
   const [isOpenAddContactModal, setIsOpenAddContactModal] = useState(false);
   const [currentContactId, setCurrentContactId] = useState(null);
   const contacts = useSelector(getFilteredContacts);
+  const contactsAll = useSelector((state) => state.contacts.items);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export default function ContactsPage() {
     <Box component="section" sx={{ flexGrow: 1, paddingTop: "80px" }}>
       <Container>
         <h1 className="visuallyHidden">Contacts</h1>
-        {contacts?.length > 0 ? (
+        {contactsAll?.length > 0 ? (
           <ContactsList
             contacts={contacts}
             openAddContactModal={setIsOpenAddContactModal}

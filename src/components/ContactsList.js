@@ -1,14 +1,11 @@
-import { useEffect } from "react";
-import { useLocation } from "react-router";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { styled } from "@mui/material/styles";
 import { Grid, Typography, IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 
 import { theme } from "common/theme";
-import { deleteContact, getContacts } from "redux/contacts/contactsOperations";
-import { getFilteredContacts } from "redux/contacts/contactsSelectors";
+import { deleteContact } from "redux/contacts/contactsOperations";
 
 const ContactsItem = styled(Grid)(({ theme }) => ({
   ...theme.typography.body2,
@@ -40,22 +37,17 @@ const ContactsWrap = styled("div")({
 });
 
 export default function ContactsList({
+  contacts,
   openAddContactModal,
   setCurrentContactId,
 }) {
-  const contacts = useSelector(getFilteredContacts);
   const dispatch = useDispatch();
-  const location = useLocation();
 
   const onDeleteContactBtnClick = (id) => dispatch(deleteContact(id));
   const onEditContactBtnClick = (id) => {
     openAddContactModal(true);
     setCurrentContactId(id);
   };
-
-  useEffect(() => {
-    if (location.pathname === "/contacts") dispatch(getContacts());
-  }, [dispatch, location.pathname]);
 
   return (
     <Grid

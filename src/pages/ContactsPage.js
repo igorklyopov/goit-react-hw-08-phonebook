@@ -1,24 +1,31 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Container, Box } from "@mui/material";
 
-import { getContacts } from "redux/contacts/contactsSelectors";
 import ContactsList from "components/ContactsList";
 import ContactsBar from "components/ContactsBar";
 import AddContactModal from "components/AddContactModal";
+import { getContacts } from "redux/contacts/contactsOperations";
 import NoContactsView from "components/NoContactsView";
+import { getFilteredContacts } from "redux/contacts/contactsSelectors";
 
 export default function ContactsPage() {
   const [isOpenAddContactModal, setIsOpenAddContactModal] = useState(false);
   const [currentContactId, setCurrentContactId] = useState(null);
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(getFilteredContacts);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getContacts());
+  }, [dispatch]);
 
   return (
     <Box component="section" sx={{ flexGrow: 1, paddingTop: "80px" }}>
       <Container>
         <h1 className="visuallyHidden">Contacts</h1>
-        {contacts.length > 0 ? (
+        {contacts?.length > 0 ? (
           <ContactsList
+            contacts={contacts}
             openAddContactModal={setIsOpenAddContactModal}
             setCurrentContactId={setCurrentContactId}
           />

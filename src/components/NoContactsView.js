@@ -1,7 +1,7 @@
 import { Box, Typography } from "@mui/material";
 import noContactsGif from "../images/travolta.gif";
 
-export default function NoContactsWiew() {
+export default function NoContactsView() {
   return (
     <Box sx={{ ml: "auto", mr: "auto", textAlign: "center" }}>
       <Typography component="p" variant="h6" align="center">

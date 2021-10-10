@@ -46,14 +46,14 @@ export default function AddContactModal({
           id: currentContactId,
           ...data,
         })
-      ).unwrap();
+      );
       setIsContactSaved(true);
 
       return;
     }
 
     if (!duplicateContact) {
-      dispatch(addContact(data)).unwrap();
+      dispatch(addContact(data));
       setIsContactSaved(true);
     } else {
       return;

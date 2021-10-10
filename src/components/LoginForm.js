@@ -101,7 +101,7 @@ export default function LoginForm() {
           <FormControl variant="outlined" fullWidth margin="dense">
             <InputLabel
               htmlFor="password"
-              sx={isNotValid && { color: theme.palette.error.main }}
+              sx={{ color: isNotValid && theme.palette.error.main }}
             >
               Password *
             </InputLabel>

@@ -17,6 +17,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 import { registerUser } from "redux/auth/authOperations";
+import Notification from "./Notification";
 
 export default function SignUpForm() {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ export default function SignUpForm() {
   };
 
   const [authValues, setAuthValues] = useState(initialAuthValues);
+  const [isNotValid, setIsNotValid] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -39,8 +41,16 @@ export default function SignUpForm() {
     };
 
     setAuthValues(initialAuthValues);
-
-    dispatch(registerUser(userCredentials));
+    if (
+      userCredentials.name ||
+      userCredentials.email === "" ||
+      userCredentials.password === ""
+    ) {
+      setIsNotValid(true);
+    } else {
+      setIsNotValid(false);
+      dispatch(registerUser(userCredentials));
+    }
   };
 
   const handleChange = (prop) => (event) => {
@@ -82,10 +92,13 @@ export default function SignUpForm() {
             id="name"
             label="Name"
             name="name"
+            type="email"
             value={authValues.name}
             autoComplete="username"
             autoFocus
             onChange={handleChange("name")}
+            error={isNotValid}
+            helperText={isNotValid ? "Enter name" : ""}
           />
           <TextField
             margin="dense"
@@ -97,6 +110,8 @@ export default function SignUpForm() {
             value={authValues.email}
             autoComplete="email"
             onChange={handleChange("email")}
+            error={isNotValid}
+            helperText={isNotValid ? "Enter email" : ""}
           />
           <FormControl variant="outlined" fullWidth margin="dense">
             <InputLabel htmlFor="password">Password *</InputLabel>
@@ -124,6 +139,13 @@ export default function SignUpForm() {
               }
               label="Password"
             />
+            {isNotValid && (
+              <Notification
+                message="Enter password"
+                textColor="#d32f2f"
+                textFontSize="15px"
+              />
+            )}
           </FormControl>
           <Button
             type="submit"

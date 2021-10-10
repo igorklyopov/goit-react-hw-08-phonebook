@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -14,9 +15,9 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
-import { useDispatch } from "react-redux";
 import { loginUser } from "redux/auth/authOperations";
 import { NavLink } from "react-router-dom";
+import Notification from "./Notification";
 
 export default function LoginForm() {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ export default function LoginForm() {
   };
 
   const [authValues, setAuthValues] = useState(initialAuthValues);
+  const [isNotValid, setIsNotValid] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -39,10 +41,16 @@ export default function LoginForm() {
 
     setAuthValues(initialAuthValues);
 
-    dispatch(loginUser(userCredentials));
+    if (userCredentials.email === "" || userCredentials.password === "") {
+      setIsNotValid(true);
+    } else {
+      setIsNotValid(false);
+      dispatch(loginUser(userCredentials));
+    }
   };
 
   const handleChange = (prop) => (event) => {
+    setIsNotValid(false);
     setAuthValues({ ...authValues, [prop]: event.target.value });
   };
 
@@ -85,6 +93,8 @@ export default function LoginForm() {
             autoComplete="email"
             autoFocus
             onChange={handleChange("email")}
+            error={isNotValid}
+            helperText={isNotValid ? "Enter email" : ""}
           />
           <FormControl variant="outlined" fullWidth margin="dense">
             <InputLabel htmlFor="password">Password *</InputLabel>
@@ -94,6 +104,7 @@ export default function LoginForm() {
               type={authValues.showPassword ? "text" : "password"}
               value={authValues.password}
               onChange={handleChange("password")}
+              error={isNotValid}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -112,6 +123,13 @@ export default function LoginForm() {
               }
               label="Password"
             />
+            {isNotValid && (
+              <Notification
+                message="Enter password"
+                textColor="#d32f2f"
+                textFontSize="15px"
+              />
+            )}
           </FormControl>
           <Button
             type="submit"

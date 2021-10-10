@@ -8,7 +8,7 @@ export default function AuthNav() {
       <NavList className="list">
         <NavItem>
           <NavLinkRouter to="/login" className="link">
-            Login
+            Log in
           </NavLinkRouter>
         </NavItem>
         <NavItem>

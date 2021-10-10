@@ -7,6 +7,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
+import { NavLink } from "react-router-dom";
 import Container from "@mui/material/Container";
 import IconButton from "@mui/material/IconButton";
 import OutlinedInput from "@mui/material/OutlinedInput";
@@ -15,9 +16,10 @@ import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+
 import { loginUser } from "redux/auth/authOperations";
-import { NavLink } from "react-router-dom";
 import Notification from "./Notification";
+import { theme } from "common/theme";
 
 export default function LoginForm() {
   const dispatch = useDispatch();
@@ -97,7 +99,9 @@ export default function LoginForm() {
             helperText={isNotValid ? "Enter email" : ""}
           />
           <FormControl variant="outlined" fullWidth margin="dense">
-            <InputLabel htmlFor="password">Password *</InputLabel>
+            <InputLabel htmlFor="password">
+              {isNotValid ? "" : "Password *"}
+            </InputLabel>
             <OutlinedInput
               id="password"
               name="password"
@@ -126,8 +130,8 @@ export default function LoginForm() {
             {isNotValid && (
               <Notification
                 message="Enter password"
-                textColor="#d32f2f"
-                textFontSize="15px"
+                color={theme.palette.error.main}
+                fontSize="15px"
               />
             )}
           </FormControl>

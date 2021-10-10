@@ -17,6 +17,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 import { registerUser } from "redux/auth/authOperations";
+import { theme } from "common/theme";
 import Notification from "./Notification";
 
 export default function SignUpForm() {
@@ -114,13 +115,16 @@ export default function SignUpForm() {
             helperText={isNotValid ? "Enter email" : ""}
           />
           <FormControl variant="outlined" fullWidth margin="dense">
-            <InputLabel htmlFor="password">Password *</InputLabel>
+            <InputLabel htmlFor="password">
+              {isNotValid ? "" : "Password *"}
+            </InputLabel>
             <OutlinedInput
               id="password"
               name="password"
               type={authValues.showPassword ? "text" : "password"}
               value={authValues.password}
               onChange={handleChange("password")}
+              error={isNotValid}
               endAdornment={
                 <InputAdornment position="end">
                   <IconButton
@@ -142,8 +146,8 @@ export default function SignUpForm() {
             {isNotValid && (
               <Notification
                 message="Enter password"
-                textColor="#d32f2f"
-                textFontSize="15px"
+                color={theme.palette.error.main}
+                fontSize="15px"
               />
             )}
           </FormControl>

@@ -115,8 +115,11 @@ export default function SignUpForm() {
             helperText={isNotValid ? "Enter email" : ""}
           />
           <FormControl variant="outlined" fullWidth margin="dense">
-            <InputLabel htmlFor="password">
-              {isNotValid ? "" : "Password *"}
+            <InputLabel
+              htmlFor="password"
+              sx={isNotValid && { color: theme.palette.error.main }}
+            >
+              Password *
             </InputLabel>
             <OutlinedInput
               id="password"

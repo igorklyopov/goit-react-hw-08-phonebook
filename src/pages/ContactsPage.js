@@ -24,14 +24,20 @@ export default function ContactsPage() {
     <Box component="section" sx={{ flexGrow: 1, paddingTop: "80px" }}>
       <Container>
         <h1 className="visuallyHidden">Contacts</h1>
-        {contactsAll?.length > 0 ? (
+        {contactsAll?.length > 0 && contacts?.length > 0 ? (
           <ContactsList
             contacts={contacts}
             openAddContactModal={setIsOpenAddContactModal}
             setCurrentContactId={setCurrentContactId}
           />
         ) : (
-          <NoContactsView />
+          <NoContactsView
+            message={
+              contactsAll?.length === 0 && contacts?.length === 0
+                ? "You have no contacts yet ..."
+                : "No results were found for this request"
+            }
+          />
         )}
         <ContactsBar openAddContactModal={setIsOpenAddContactModal} />
         <AddContactModal

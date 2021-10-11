@@ -16,6 +16,7 @@ export default function AddContactForm({
   const { handleSubmit, control, setValue } = useForm();
 
   const contacts = useSelector(getFilteredContacts);
+
   const getCurrentContactById = (contacts) => {
     return contacts.find((contact) => contact.id === currentContactId);
   };
